@@ -1,1 +1,5 @@
-��github�ϻ�ȡ��Ŀ��http://blog.csdn.net/qq_38658877/article/details/78042508
+将github上的项目和本地进行链接：http://blog.csdn.net/qq_38658877/article/details/78042508
+git add . //将当期目录下的git未管理的文件加入git版本管理中
+git status //查看当前目录下的文件状态，红色表示未纳入git版本管理中，绿色表示未同步到github
+git commit -m  "commit" 
+git push //上传到github
