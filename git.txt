@@ -3,3 +3,8 @@ git add . //将当期目录下的git未管理的文件加入git版本管理中
 git status //查看当前目录下的文件状态，红色表示未纳入git版本管理中，绿色表示未同步到github
 git commit -m  "commit" 
 git push //上传到github
+git log --stat //查看修改log
+git show --stat //查看文件更新之后状态
+git show <hashcode> <filename> //查看某个文件在某个版本之下的更改
+git log --pretty=oneline <filename> //查看仅这个文件的所有历史记录：
+git whatchanged <filename> //查看某个文件的包含提交人员，日期、版本号等记录信息，不包括修改详情：
