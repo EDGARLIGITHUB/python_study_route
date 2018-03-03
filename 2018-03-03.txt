@@ -1,0 +1,194 @@
+python学习笔记，摘自廖大神博客：
+1:
+print('hello,world')
+print('hello','world')
+2:
+//调用input函数获取输入
+name=input()
+//变量可以直接输入获取其值，也可以通过print函数
+name
+print(name)
+3:
+//用户输入之前的提示信息
+name=input('please input your name')
+print('hello',name)
+4:
+number1=input('input first number')
+number2=input('input second number')
+print(number1,'+',number2,'=',int(number1)*int(number2))
+		数据类型和变量
+5:整数/转义字符/将某个字符串\默认不转义,可以想象如果没有r''怎么输出\\\t\\
+a=0xff/string='I\'m \"OK\"!'/print(r'\\\t\\')
+6,使用'''...'''表示多行内容，可以使用r表示字符串不包含转义字符
+print('''line1
+line2
+line3''')
+7，true/false/and/or/not/none
+8,python变量类型不固定，所以称为动态语言，对应于静态语言（定义变量需指明变量类型）
+9,a = 'ABC'
+Python解释器干了两件事情：
+
+在内存中创建了一个'ABC'的字符串；
+
+在内存中创建了一个名为a的变量，并把它指向'ABC'。
+10,除：10/3。地板除：10//3。取余：10%3
+11：对变量赋值x = y是把变量x指向真正的对象，该对象是变量y所指向的。随后对变量y的赋值不影响变量x的指向。
+12：
+n = 123
+f = 456.789
+s1 = 'Hello, world'
+s2 = 'Hello, \'Adam\''
+s3 = r'Hello, "Bart"'
+s4 = r'''Hello,
+Lisa!'''
+
+# just print them out
+print('''n = %s
+f = %s
+s1 = %s
+s2 = %s
+s3 = %s
+s4 = %s''' % (n,f,s1,s2,s3,s4))
+		字符串和编码
+13：ASCII：美国人制定的只包含大小写字母和若干符号的对应表（一个字符占1字节）
+Unicode:为了统一各个国家的编码对应表所使用的一种编码方式（一个字符占2字节）
+UTF-8：为了解决存储英文造成空间浪费提供的一种编码方式
+14：python的字符串类型是str，在内存中是使用Unicode编码方式
+Python提供了ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符：
+ord('中')，chr(25991),print('\u4e2d\u6587') //使用16进制输出‘中文’
+15：Python对bytes类型的数据用带b前缀的单引号或双引号表示，以Unicode表示的str通过encode()方法可以编码为指定的bytes，例如：
+>>>'ABC'.encode('ascii')
+b'ABC'
+>>> '中文'.encode('utf-8')
+b'\xe4\xb8\xad\xe6\x96\x87'
+>>> '中文'.encode('ascii')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-1: ordinal not in range(128)
+反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法
+>>> b'ABC'.decode('ascii')
+'ABC'
+>>> b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8')
+'中文'
+如果bytes中只有一小部分无效的字节，可以传入errors='ignore'忽略错误的字节：
+>>> b'\xe4\xb8\xad\xff'.decode('utf-8', errors='ignore')
+'中'
+计算str包含多少个字符：len('ABC')
+计算str所占字节数：len(b'ABC')，len(b'\xe4\xb8\xad\xe6\x96\x87')
+在操作字符串时，我们经常遇到str和bytes的互相转换。为了避免乱码问题，
+应当始终坚持使用UTF-8编码对str和bytes进行转换：# -*- coding: utf-8 -*-
+16：格式化输出
+>>> 'Hi, %s, you have $%d.' % ('Michael', 1000000)
+'Hi, Michael, you have $1000000.
+17：
+print('%2d-%02d' % (3, 1))
+print('%.2f' % 3.1415926)
+有些时候，字符串里面的%是一个普通字符怎么办？
+这个时候就需要转义，用%%来表示一个%：
+>>> 'growth rate: %d %%' % 7
+'growth rate: 7 %'
+18：字符串的format（）
+>>> 'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)
+'Hello, 小明, 成绩提升了 17.1%'
+		使用list和tuple
+19:列表
+classmates = ['Michael', 'Bob', 'Tracy']，类似c语言数组，但是不同的是可以动态添加从下标0开始索引，len()函数获取list元素个数
+classmates[-1] #获取最后一个元素，
+classmates.append('Adam') #添加元素
+classmates.insert(1, 'Jack') #指定索引号添加元素
+classmates.pop() #删除list末尾元素，类似c语言栈
+classmates.pop(1) #删除指定索引的元素
+classmates[1] = 'Sarah' #指定索引号替换成新元素
+L = ['Apple', 123, True] #list元素可以类型不同
+>>> s = ['python', 'java', ['asp', 'php'], 'scheme']
+>>> len(s)
+L = [] #空的list
+4 #list 某个元素是list
+获取'asp':s[2][1]
+20:另一种有序列表tuple，一旦初始化不能更改，代码更安全
+classmates = ('Michael', 'Bob', 'Tracy')
+t = () #定义空的tuple，但是有什么用呢？？
+需要注意的是tuple里面的某个元素可以是list，所以可以通过更改list里面的元素来改变tuple
+		条件判断
+21：
+if <条件判断1>:
+    <执行1>
+elif <条件判断2>:
+    <执行2>
+elif <条件判断3>:
+    <执行3>
+else:
+    <执行4>
+22：if x:
+    print('True') #只要x是非零数值、非空字符串、非空list等，就判断为True，否则为False。
+		循环
+23：#for循环
+sum = 0
+for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+    sum = sum + x
+print(sum)
+24：
+>>> list(range(5))
+[0, 1, 2, 3, 4]  #range()函数生成从0到小于5的整数序列，list函数将其转化为list
+25：#while循环
+sum = 0
+n = 99
+while n > 0:
+    sum = sum + n
+    n = n - 2
+print(sum)
+26：#break跳出循环
+n = 1
+while n <= 100:
+    if n > 10: # 当n = 11时，条件满足，执行break语句
+        break # break语句会结束当前循环
+    print(n)
+    n = n + 1
+print('END')
+27：#continue提前结束本次循环
+n = 0
+while n < 10:
+    n = n + 1
+    if n % 2 == 0: # 如果n是偶数，执行continue语句
+        continue # continue语句会直接继续下一轮循环，后续的print()语句不会执行
+    print(n)
+		dict和set
+28：#dict是键-值（key-value）存储，初始化指定
+>>> d = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
+>>> d['Michael']
+95
+29：#通过key放入键对应的值
+>>> d['Adam'] = 67
+>>> d['Adam']
+67
+30：为了避免key不存在，可以使用以下两种方法
+>>> 'Thomas' in d
+False #判断元素是否在dict内
+>>> d.get('Thomas') #dict内不包含Thomas的时候，返回None,python不会显示任何结果
+>>> d.get('Thomas', -1) #指定dict如果不包含Thomas,返回-1
+-1
+d.pop('Bob') #pop()函数删除某个元素
+31：dict通过hash算法根据key计算对应的‘页码’，然后去对应页码获取值，
+请务必注意，dict内部存放的顺序和key放入的顺序是没有关系的。？？？？
+但占用大量内存？？dict的key必须是不可变对象！！！
+因此字符串，整数等都可以作为key存放，而list就不行
+32：set #set和dict的唯一区别仅在于没有存储对应的value，但是，set的原理和dict一样，所以，同样不可以放入可变对象，
+因为无法判断两个可变对象是否相等，也就无法保证set内部“不会有重复元素”。
+s = set([1, 2, 3]) #set需哟啊使用list作为输入集合，并且list中的重复元素会自动被过滤
+s.add(4) #add方法添加元素
+s.remove(4) #remove删除元素
+33：
+>>> s1 = set([1, 2, 3])
+>>> s2 = set([2, 3, 4])
+>>> s1 & s2
+{2, 3}
+>>> s1 | s2
+{1, 2, 3, 4} # set的并集，交集操作
+34：再议不可变对象
+>>> a = ['c', 'b', 'a']
+>>> a.sort()
+>>> a
+['a', 'b', 'c']   #sort方法排序
+a = 'abc' #我们经常说，对象a的内容是'abc'，但其实是指，
+a本身是一个变量，它指向的对象的内容才是'abc'：
+  #dict的key必须是不可变的，set的元素也必须是不可变的
